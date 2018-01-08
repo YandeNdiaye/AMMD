@@ -2,7 +2,7 @@
 #
 # File Name: settings.py
 # Application: mgi
-# Description: 
+# Description:
 #   Django settings for mgi project.
 #   For more information on this file, see
 #   https://docs.djangoproject.com/en/1.7/topics/settings/
@@ -19,60 +19,60 @@
 # Sponsor: National Institute of Standards and Technology (NIST)
 #
 ################################################################################
-from __future__ import absolute_import
 import os
-from celery.schedules import crontab
+
 from django.core.urlresolvers import reverse_lazy
 from mongoengine import connect
 
 VERSION = "1.4_rc3"
-
 # - - - - - - - - - - - - - - - - - - - - - -
 # added caching support - BJL - 2017-06-14
 # - - - - - - - - - - - - - - - - - - - - - -
 CACHES = {
-        'default': {
-            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-            'LOCATION': 'loc1',
-            'TIMEOUT': None
-        },
-        'navigation': {
-            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-            'LOCATION': 'loc2',
-            'TIMEOUT': None
-        },
-        'html_tree': {
-            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-            'LOCATION': 'loc3',
-            'TIMEOUT': None
-        },
-        'nav_id': {
-            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-            'LOCATION': 'loc4',
-            'TIMEOUT': None
-        },
-        'tmpls': {
-            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-            'LOCATION': 'loc5',
-            'TIMEOUT': None
-        },
-        'leaf': {
-            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-            'LOCATION': 'loc6',
-            'TIMEOUT': None
-        },
-        'branch': {
-            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-            'LOCATION': 'loc7',
-            'TIMEOUT': None
-        },
-        'link': {
-            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-            'LOCATION': 'loc8',
-            'TIMEOUT': None
-        },
-    }
-
+		'default': {
+			'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+			'LOCATION': 'loc1',
+			'TIMEOUT': None
+		},
+		'navigation': {
+			'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+			'LOCATION': 'loc2',
+			'TIMEOUT': None
+		},
+		'html_tree': {
+			'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+			'LOCATION': 'loc3',
+			'TIMEOUT': None
+		},
+		'nav_id': {
+			'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+			'LOCATION': 'loc4',
+			'TIMEOUT': None
+		},
+		'tmpls': {
+			'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+			'LOCATION': 'loc5',
+			'TIMEOUT': None
+		},
+		'leaf': {
+			'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+			'LOCATION': 'loc6',
+			'TIMEOUT': None,
+			'OPTIONS': {
+            	'MAX_ENTRIES': 1000
+        	}
+		},
+		'branch': {
+			'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+			'LOCATION': 'loc7',
+			'TIMEOUT': None
+		},
+		'link': {
+			'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+			'LOCATION': 'loc8',
+			'TIMEOUT': None
+		},
+}
 # - - - - - - - - - - - - - - - - - - - - - -
 
 CACHE_MIDDLEWARE_ALIAS = 'default'
@@ -82,9 +82,8 @@ CACHE_BACKEND = "locmem:///"
 
 # - - - - - - - - - - - - - - - - - - - - - -
 
-
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
@@ -92,9 +91,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 if DEBUG:
     SECRET_KEY = 'ponq)(gd8hm57799)$lup4g9kyvp0l(9)k-3!em7dddn^(y)!5'
-    
+
     ALLOWED_HOSTS = ['*']
-    
+
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
@@ -102,9 +101,7 @@ if DEBUG:
         }
     }
 else:
-    # Uncomment and set all parameters, delete pass instruction
-    # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
-    SECRET_KEY = '<secret_key>'
+    SECRET_KEY = '<secret_key'
 
     # https://docs.djangoproject.com/en/1.7/ref/settings/#allowed-hosts
     ALLOWED_HOSTS = ['*']
@@ -126,6 +123,30 @@ else:
             'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         }
     }
+    # Uncomment and set all parameters, delete pass instruction
+    # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
+
+    # https://docs.djangoproject.com/en/1.7/ref/settings/#secret-key
+    # SECRET_KEY = '<secret_key>'
+
+    # https://docs.djangoproject.com/en/1.7/ref/settings/#allowed-hosts
+    # ALLOWED_HOSTS = ['<domain>','<server_ip>']
+
+    # os.environ['HTTPS'] = "on"
+    # https://docs.djangoproject.com/en/1.7/ref/settings/#csrf-cookie-secure
+    # CSRF_COOKIE_SECURE = True
+    # https://docs.djangoproject.com/en/1.7/ref/settings/#session-cookie-secure
+    # SESSION_COOKIE_SECURE = True
+
+    # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
+    # DATABASES = {
+    #     'default': {
+    #         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #         'USER':"<postgres_user>",
+    #         'PASSWORD': "<postgres_password>",
+    #         'NAME': 'mgi',
+    #     }
+    # }
 
 #SMTP Configuration
 USE_EMAIL = False #Send email, True or False
@@ -272,15 +293,15 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # 'mongoengine.django.mongo_auth',
     'rest_framework',
+    'rest_framework.status', # Y
     'rest_framework_swagger',
     'oauth2_provider',
     'admin_mdcs',
     'api',
     'curate',
     'exporter',
-    # 'explore',
+    #'explore',
     'compose',
     'modules',
     'user_dashboard',
@@ -290,6 +311,7 @@ INSTALLED_APPS = (
     'password_policies',
     'explore_tree',
     'schema_viewer',
+	'django_crontab',# Y
 )
 
 OAUTH2_PROVIDER = {
@@ -327,7 +349,7 @@ SWAGGER_SETTINGS = {
 }
 
 
-# django.contrib.auth.views.login redirects you to accounts/profile/ 
+# django.contrib.auth.views.login redirects you to accounts/profile/
 # right after you log in by default. This setting changes that.
 LOGIN_REDIRECT_URL = reverse_lazy("home")
 
