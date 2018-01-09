@@ -1,0 +1,68 @@
+AMMD 1.6 Release 2 :
+01/08/18
+**Author**:
+* Yande Ndiaye (ndeye.ndiaye@nist.gov)
+
+INTRODUCTION
+	This release sets the AMMD v1.6 by providing new features for the system and fixed a bug within the exploration tree.	
+
+ADDED FEATURES 
+	
+	- 	Within the records page (User dashboard):
+	
+	. Access the information related to the schema used to curate data
+ 	. Access the other users' records and its information
+	
+	Modified files :
+		. \templates\am\dashboard\my_dashboard_detail_record.html
+		. \templates\am\dashboard\my_dashboard_my_records.html
+		. \templates\dashboard\my_dashboard_detail_record.html
+		. \user_dashboard\ajax.py
+		. \user_dashboard\urls.py
+		. \user_dashboard\views.py
+
+	Added files:
+		. \templates\am\dashboard\my_dashboard_otherusersrecords.html
+		. \templates\am\dashboard\my_dashboard_detail_recordotherusers.html
+
+
+	- 	Within the exploration tree page (Explore Tree):
+		. Enables to download the displayed data
+		. Enables to download the main file used 
+		. Cache all the result files that can be accessed for the current node 
+
+	Modified files :
+		. \explore_tree\ajax.py
+		. \explore_tree\urls.py
+		. \explore_tree\views.py
+		. \explore_tree\api\navigation\operations.py
+		. \explore_tree\api\models.py
+		. \explore_tree\parser\query.py
+		. (\explore_tree\parser\renderer.py)
+		. \explore_tree\static\explore_tree\js\load_view.js
+		. (\explore_tree\static\explore_tree\js\resize_tree_panel.js)
+		. (\explore_tree\static\explore_tree\js\tree.js)
+		. \explore_tree\templates\explore_tree\content.html
+		. \templates\am\explore_tree_wrapper.html
+		. \templates\am\landing_page.html
+		. \mgi\models.py
+		. \mgi\settings.py
+		. \mgi\urls.py
+		. \utils\json_parser\processview.py
+		. \utils\xml_utils\projection.py
+
+	Added files :
+		. \explore_tree\dicttoxml.py
+
+BUGFIXED 
+	-	Fix the problem of displaying the view for a link (This features was broken for the last release)
+	Modified files:
+		. explore_tree\api\navigation\operations.py
+
+DEPLOYMENT PROCESS
+
+NOTE: 
+	All the modified and new files are contained in the separate directory: ammd-1.6-release2/ . These may also be found within the main code-base as well.
+To deploy the new version to the existing site deployment :
+	Follow the deployment proccess as written in the file \docs\ammd-installation-instructions-v1.6.txt
+
